@@ -15,6 +15,7 @@ Future Updates:
 - Font size Adjustments 
 - Help Button: guide on how to use the app
 - Share Feature
+- More Athkar
 
 This project was built with love, sincerity, and the intention to help others reconnect with Allah through the power of remembrance.
 May it benefit you and those around you, and may Allah accept our efforts. Ameen. 🌸
