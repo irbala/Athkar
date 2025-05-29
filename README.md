@@ -1,4 +1,4 @@
-# Athkar
+# Athkar 🤲🏻🌙✨
 
 A simple Morning & Evening Adhkar web app — accessible, responsive, and designed for both web and mobile. It offers a peaceful, focused experience to help Muslims stay connected to their daily spiritual routine.
 
