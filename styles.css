@@ -88,7 +88,10 @@
             color: #4e3447;
             padding: 2vw;
             margin: 2vw;
-            overflow-y: hidden;
+            /* Keep long adhkar between the switch and the buttons; scroll if needed */
+            max-height: calc(100vh - 280px);
+            max-height: calc(100dvh - 280px);
+            overflow-y: auto;
             font-size: 16px;
             border-radius: 10px;
             word-break: break-word;
@@ -170,6 +173,16 @@
 
             .supplication-display {
                 font-size: 20px;
+            }
+
+            /* Keep all the buttons on one row on narrow phones */
+            .controls {
+                gap: 6px;
+            }
+
+            .controls button {
+                margin: 0;
+                padding: 0.6em 0.8em;
             }
             
         }
