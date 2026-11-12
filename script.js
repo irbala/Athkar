@@ -115,6 +115,8 @@ toggleSwitch.addEventListener('change', () => {
         currentSupplications = morningSupplications;
         currentProgress = progress.morning;
     }
+    // Evening adhkar use the night colours (see body.evening in styles.css)
+    document.body.classList.toggle('evening', toggleSwitch.checked);
     goTo(0); // Start from the beginning when switching
 });
 
