@@ -8,6 +8,19 @@
     --accent: #b898af;
     --accent-pale: #e5cbde;
     --surface: #ffffff;
+    --shadow: rgba(78, 52, 71, 0.18);
+}
+
+/* Evening adhkar: soft night colours (the class is added by script.js) */
+body.evening {
+    --background: #231c2e;
+    --text: #f1e6ef;
+    --text-soft: #b8a5b6;
+    --accent: #8a6d92;
+    --accent-pale: #2f2639;
+    --surface: #352b42;
+    --shadow: rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
 }
 
 * {
@@ -20,6 +33,7 @@ body {
     font-family: 'Noto Sans Arabic', sans-serif;
     background-color: var(--background);
     color: var(--text);
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* The app fills the screen as one column:
@@ -163,6 +177,21 @@ button[disabled] {
     cursor: not-allowed;
 }
 
+/* Night buttons get a soft surface instead of the browser's light grey.
+   :where() keeps these rules weak, so the hover, counter and reset styles still win. */
+:where(body.evening) button {
+    background-color: var(--surface);
+}
+
+:where(body.evening) button[disabled] {
+    color: var(--text-soft);
+}
+
+/* Keeps the dark switch visible on the night background */
+body.evening .slider {
+    box-shadow: 0 0 0 1px rgba(241, 230, 239, 0.18);
+}
+
 button:focus-visible,
 .switch input:focus-visible + .slider {
     outline: 2px solid var(--text);
@@ -189,7 +218,7 @@ button:focus-visible,
     padding: 0;
     border-radius: 50%;
     background-color: var(--surface);
-    box-shadow: 0 6px 18px rgba(78, 52, 71, 0.18);
+    box-shadow: 0 6px 18px var(--shadow);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -268,6 +297,11 @@ footer a {
     color: var(--accent);
     text-decoration: none;
     font-weight: bold;
+}
+
+body.evening footer,
+body.evening footer a {
+    color: var(--text-soft);
 }
 
 /* Narrow phones: keep all the buttons on one row */
