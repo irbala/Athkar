@@ -1,188 +1,309 @@
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Sans+Arabic:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Sans+Arabic:wght@100..900&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Colours used across the app */
+:root {
+    --background: #f1dceb;
+    --text: #4e3447;
+    --text-soft: #8a6a81;
+    --accent: #b898af;
+    --accent-pale: #e5cbde;
+    --surface: #ffffff;
+}
 
-        body {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            background-color: #f1dceb;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .app-container {
-            max-width: 400px;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
+body {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+}
 
-        .switch {
-            position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: block;
-            --width-of-switch: 3.5em;
-            --height-of-switch: 2em;
-            /* size of sliding icon -- sun and moon */
-            --size-of-icon: 1.4em;
-            /* it is like a inline-padding of switch */
-            --slider-offset: 0.3em;
-            width: var(--width-of-switch);
-            height: var(--height-of-switch);
-            z-index: 10;
-        }
+/* The app fills the screen as one column:
+   switch, dhikr text (takes the spare room and scrolls), counter, buttons, footer */
+.app-container {
+    max-width: 440px;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0 auto;
+    padding: 24px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
 
-        /* Hide default HTML checkbox */
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+header {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 16px;
+}
 
-        /* The slider */
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f4f4f5;
-            transition: .4s;
-            border-radius: 30px;
-        }
+main {
+    flex: 1;
+    min-height: 0; /* lets the text area shrink and scroll instead of pushing the buttons off screen */
+    display: flex;
+    flex-direction: column;
+}
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: var(--size-of-icon, 1.4em);
-            width: var(--size-of-icon, 1.4em);
-            border-radius: 20px;
-            left: var(--slider-offset, 0.3em);
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
-            transition: .4s;
-        }
+/* Text for screen readers only */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
 
-        input:checked+.slider {
-            background-color: #303136;
-        }
+/* Morning / evening switch */
+.switch {
+    position: relative;
+    display: block;
+    --width-of-switch: 3.5em;
+    --height-of-switch: 2em;
+    /* size of sliding icon -- sun and moon */
+    --size-of-icon: 1.4em;
+    /* it is like a inline-padding of switch */
+    --slider-offset: 0.3em;
+    width: var(--width-of-switch);
+    height: var(--height-of-switch);
+}
 
-        input:checked+.slider:before {
-            left: calc(100% - (var(--size-of-icon, 1.4em) + var(--slider-offset, 0.3em)));
-            background: #303136;
-            /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
-            box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
-        }
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
-        .supplication-display {
-            color: #4e3447;
-            padding: 2vw;
-            margin: 2vw;
-            /* Keep long adhkar between the switch and the buttons; scroll if needed */
-            max-height: calc(100vh - 280px);
-            max-height: calc(100dvh - 280px);
-            overflow-y: auto;
-            font-size: 16px;
-            border-radius: 10px;
-            word-break: break-word;
-        }
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f4f4f5;
+    transition: .4s;
+    border-radius: 30px;
+}
 
-        #supplication-text {
-            font-size: clamp(1em, 2.5vw, 1.3em);
-            line-height: 1.6;
-            word-break: break-word;
-        }
+.slider:before {
+    position: absolute;
+    content: "";
+    height: var(--size-of-icon, 1.4em);
+    width: var(--size-of-icon, 1.4em);
+    border-radius: 20px;
+    left: var(--slider-offset, 0.3em);
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
+    transition: .4s;
+}
 
-        button {
-            margin: 1vw;
-            padding: 0.7em 1.2em;
-            font-size: 1em;
-            min-width: 40px;
-            min-height: 40px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: inline-block;
-        }
+input:checked+.slider {
+    background-color: #303136;
+}
 
-        .controls {
-            position: fixed;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1vw;
-        }
+input:checked+.slider:before {
+    left: calc(100% - (var(--size-of-icon, 1.4em) + var(--slider-offset, 0.3em)));
+    background: #303136;
+    /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+    box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+}
 
+/* Dhikr text: centred when short, scrolls when long */
+.supplication-display {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    padding: 8px 12px;
+}
 
-        button:hover {
-            background-color: #b898af;
-            color: white;
-        }
+#supplication-text {
+    margin: auto; /* centres short text, and still lets long text scroll from its first line */
+    font-size: clamp(1.15rem, 4.6vw, 1.3rem);
+    line-height: 1.9;
+    word-break: break-word;
+}
 
-        button[disabled] {
-            background-color: #e5cbde;
-            cursor: not-allowed;
-        }
+/* The opening card ("اذكار الصباح" / "اذكار المساء") */
+#supplication-text.title-card {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
 
-        #counter {
-            font-size: 16px;
-            padding: 0.5em 1em;
-            border-radius: 5px;
-        }
+/* Buttons */
+button {
+    padding: 0.7em 1.2em;
+    font-family: inherit;
+    font-size: 1em;
+    min-width: 44px;
+    min-height: 44px;
+    border: none;
+    border-radius: 5px;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-        footer {
-            direction: ltr;
-            text-align: left;
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 10px;
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 0.8em;
-            color: #b898af;
-        }
+button:hover {
+    background-color: var(--accent);
+    color: white;
+}
 
-        footer a {
-            color: #b898af;
-            text-decoration: none;
-            font-weight: bold;
-        }
+button[disabled] {
+    background-color: var(--accent-pale);
+    cursor: not-allowed;
+}
 
-        @media screen and (max-width: 600px) {
-            .app-container {
-                padding: 10px;
-                width: 90%;
-            }
+button:focus-visible,
+.switch input:focus-visible + .slider {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+}
 
-            .supplication-display {
-                font-size: 20px;
-            }
+/* Tap counter */
+.tally {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 14px;
+    /* Always the same height, so nothing jumps when "إعادة العد" appears */
+    min-height: 152px;
+}
 
-            /* Keep all the buttons on one row on narrow phones */
-            .controls {
-                gap: 6px;
-            }
+.tally[hidden] {
+    display: none;
+}
 
-            .controls button {
-                margin: 0;
-                padding: 0.6em 0.8em;
-            }
-            
-        }
+.count-button {
+    width: 108px;
+    height: 108px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--surface);
+    box-shadow: 0 6px 18px rgba(78, 52, 71, 0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    /* No double-tap zoom or text selection while counting quickly */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.count-button:hover {
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+.count-button:active {
+    transform: scale(0.94);
+}
+
+.count-button.finished,
+.count-button.finished:hover {
+    background-color: var(--accent);
+    color: #fff;
+}
+
+.count-done {
+    font-size: 2.1em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.count-target {
+    font-size: 0.85em;
+}
+
+.reset-button,
+.reset-button:hover {
+    margin-top: 4px;
+    padding: 0.2em 0.8em;
+    min-height: 0;
+    background: none;
+    color: var(--text-soft);
+    font-size: 0.85em;
+    text-decoration: underline;
+}
+
+.reset-button[hidden] {
+    display: none;
+}
+
+/* First / previous / next / last */
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0 14px;
+}
+
+#counter {
+    font-size: 16px;
+    padding: 0.5em 0.8em;
+}
+
+footer {
+    direction: ltr;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--accent);
+}
+
+footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Narrow phones: keep all the buttons on one row */
+@media screen and (max-width: 380px) {
+    .controls {
+        gap: 6px;
+    }
+
+    .controls button {
+        padding: 0.6em 0.8em;
+    }
+}
+
+/* Short screens (small phones, landscape): a smaller counter leaves more room for the text */
+@media screen and (max-height: 620px) {
+    .app-container {
+        padding-top: 14px;
+    }
+
+    .tally {
+        min-height: 118px;
+        padding-top: 8px;
+    }
+
+    .count-button {
+        width: 78px;
+        height: 78px;
+    }
+
+    .count-done {
+        font-size: 1.6em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}

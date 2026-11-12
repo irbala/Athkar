@@ -4,14 +4,14 @@ A simple Morning & Evening Adhkar web app — accessible, responsive, and design
 
 Visit the app here: https://irbala.github.io/Athkar/ 
 
-Features
+## Features
 - Morning & Evening Adhkar (authentic and structured), including their repeating numbers.
+- **Tap to count**: tap the round button once for each repetition. When a dhikr is complete it shows a tick and moves on to the next one by itself. "إعادة العد" starts the current dhikr again.
 - Clean, minimalist UI
 - Responsive on mobile and tablet
 
-Future Updates:
+## Future Updates
 - Dark Mode toggle for evening athkar
-- Functional Repeat Button
 - Font size Adjustments 
 - Help Button: guide on how to use the app
 - Share Feature
